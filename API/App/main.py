@@ -123,7 +123,7 @@ def update_post(id: int, up_post: Schemas.PostCreate,db:Session = Depends(get_db
     # post_dict = post.model_dump()
     # post_dict['id'] = id
     # my_posts[idx] = post_dict
-    # return u_post
+    # return u_post_check it
     return updated_post.first()
 
 @app.post("/users", status_code=status.HTTP_201_CREATED)

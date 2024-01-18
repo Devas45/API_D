@@ -25,6 +25,7 @@ class Post(BaseModel):
     class Config:
         orm_mode = True
 
+# git check
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
