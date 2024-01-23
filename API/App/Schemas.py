@@ -1,5 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel,EmailStr
+from typing import Optional
 
 # class Post(BaseModel):
 #     title: str
@@ -25,8 +26,25 @@ class Post(BaseModel):
     class Config:
         orm_mode = True
 
-# git check2
+
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
 
+class UserOut(BaseModel):
+    email: EmailStr
+    id: int
+    created_at: datetime
+    class Config:
+        orm_mode = True
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+class Token(BaseModel):
+    access_token:str
+    token_type:str
+
+class TokenData(BaseModel):
+    id: Optional[str] = None
