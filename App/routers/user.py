@@ -5,10 +5,14 @@ from sqlalchemy.orm import Session
 
 router = APIRouter()
 
-@router.post("/users", status_code=status.HTTP_201_CREATED,response_model=Schemas.UserOut)
-def create_user(user: Schemas.UserCreate,db:Session = Depends(get_db)):
+@router.post("/users", status_code=status.HTTP_201_CREATED, response_model=Schemas.UserOut)
+def create_user(user: Schemas.UserCreate, db: Session = Depends(get_db)):
+    # Check if email already exists
+    existing_user = db.query(models_api.User).filter(models_api.User.email == user.email).first()
+    if existing_user:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
     
-    # hash the password - user.password
+    # Hash the password
     hashed_password = utils.hash(user.password)
     user.password = hashed_password
 
@@ -18,7 +22,6 @@ def create_user(user: Schemas.UserCreate,db:Session = Depends(get_db)):
     db.refresh(new_user)
 
     return new_user
-
 
 @router.get('/users/{id}',response_model = Schemas.UserOut)
 def get_user(id:int ,db: Session = Depends(get_db)):
