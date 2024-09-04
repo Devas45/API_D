@@ -40,7 +40,7 @@ class PostOut(BaseModel):
     published: bool
     created_at: datetime
     owner: UserOut
-    votes: int
+    votes: Optional[int] = None
 
     class Config:
         orm_mode = True
