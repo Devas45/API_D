@@ -1,10 +1,10 @@
 import pytest
-from app import models
+from App import models_api
 
 
 @pytest.fixture()
 def test_vote(test_posts, session, test_user):
-    new_vote = models.Vote(post_id=test_posts[3].id, user_id=test_user['id'])
+    new_vote = models_api.Vote(post_id=test_posts[3].id, user_id=test_user['id'])
     session.add(new_vote)
     session.commit()
 

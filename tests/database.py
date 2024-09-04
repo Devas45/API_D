@@ -3,11 +3,11 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from app.main import app
+from App.main import app
 
-from app.config import settings
-from app.database import get_db
-from app.database import Base
+from App.config import settings
+from App.database import get_db
+from App.database import Base
 from alembic import command
 
 

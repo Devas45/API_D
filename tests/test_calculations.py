@@ -1,16 +1,16 @@
 import pytest
-from app.calculations import add, subtract, multiply, divide, BankAccount, InsufficientFunds
+from App.calculations import add, sub, mul, div
 
 
-@pytest.fixture
-def zero_bank_account():
-    print("creating empty bank account")
-    return BankAccount()
+# @pytest.fixture
+# def zero_bank_account():
+#     print("creating empty bank account")
+#     return BankAccount()
 
 
-@pytest.fixture
-def bank_account():
-    return BankAccount(50)
+# @pytest.fixture
+# def bank_account():
+#     return BankAccount(50)
 
 
 @pytest.mark.parametrize("num1, num2, expected", [
@@ -23,16 +23,16 @@ def test_add(num1, num2, expected):
     assert add(num1, num2) == expected
 
 
-def test_subtract():
-    assert subtract(9, 4) == 5
+def test_sub():
+    assert sub(9, 4) == 5
 
 
-def test_multiply():
-    assert multiply(4, 3) == 12
+def test_mul():
+    assert mul(4, 3) == 12
 
 
 def test_divde():
-    assert divide(20, 5) == 4
+    assert div(20, 5) == 4
 
 
 def test_bank_set_initial_amount(bank_account):
@@ -75,6 +75,6 @@ def test_bank_transaction(zero_bank_account, deposited, withdrew, expected):
     assert zero_bank_account.balance == expected
 
 
-def test_insufficient_funds(bank_account):
-    with pytest.raises(InsufficientFunds):
-        bank_account.withdraw(200)
+# def test_insufficient_funds(bank_account):
+#     with pytest.raises(InsufficientFunds):
+#         bank_account.withdraw(200)

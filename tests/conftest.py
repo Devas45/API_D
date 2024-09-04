@@ -3,13 +3,13 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from app.main import app
+from App.main import app
 
-from app.config import settings
-from app.database import get_db
-from app.database import Base
-from app.oauth2 import create_access_token
-from app import models
+from App.config import settings
+from App.database import get_db
+from App.database import Base
+from App.oauth2 import create_access_token
+from App import models_api
 from alembic import command
 
 
@@ -50,7 +50,7 @@ def client(session):
 @pytest.fixture
 def test_user2(client):
     user_data = {"email": "sanjeev123@gmail.com",
-                 "password": "password123"}
+                "password": "password123"}
     res = client.post("/users/", json=user_data)
 
     assert res.status_code == 201
@@ -63,7 +63,7 @@ def test_user2(client):
 @pytest.fixture
 def test_user(client):
     user_data = {"email": "sanjeev@gmail.com",
-                 "password": "password123"}
+                "password": "password123"}
     res = client.post("/users/", json=user_data)
 
     assert res.status_code == 201
@@ -110,15 +110,15 @@ def test_posts(test_user, session, test_user2):
     }]
 
     def create_post_model(post):
-        return models.Post(**post)
+        return models_api.Post(**post)
 
     post_map = map(create_post_model, posts_data)
     posts = list(post_map)
 
     session.add_all(posts)
-    # session.add_all([models.Post(title="first title", content="first content", owner_id=test_user['id']),
-    #                 models.Post(title="2nd title", content="2nd content", owner_id=test_user['id']), models.Post(title="3rd title", content="3rd content", owner_id=test_user['id'])])
+    # session.add_all([models_api.Post(title="first title", content="first content", owner_id=test_user['id']),
+    #                 models_api.Post(title="2nd title", content="2nd content", owner_id=test_user['id']), models_api.Post(title="3rd title", content="3rd content", owner_id=test_user['id'])])
     session.commit()
 
-    posts = session.query(models.Post).all()
+    posts = session.query(models_api.Post).all()
     return posts
